@@ -10,23 +10,17 @@ import { nameValidator, emailValidator, passwordValidator } from '../core/utils'
 const UpdateUserInformation = ({ navigation, route }) => {
 
     const { token } = route.params;
+    const { user } = route.params;
 
-    const [firstname, setFirstName] = useState({ value: '', error: '' });
-    const [lastname, setLastName] = useState({ value: '', error: '' });
-    const [middlename, setMiddleName] = useState({ value: '', error: '' });
-    const [email, setEmail] = useState({ value: '', error: '' });
+    const [firstname, setFirstName] = useState({ value: user.firstName, error: '' });
+    const [lastname, setLastName] = useState({ value: user.lastName, error: '' });
+    const [middlename, setMiddleName] = useState({ value: user.middleName, error: '' });
+    const [email, setEmail] = useState({ value: user.email, error: '' });
     const [updateuserpass, setUpdateUserPass] = useState({ value: '', error: '' });
-    const [homephone, setHomePhone] = useState({ value: '', error: '' });
-    const [workphone, setWorkPhone] = useState({ value: '', error: '' });
-    const [cellphone, setCellPhone] = useState({ value: '', error: '' });
-    const [address, setAddress] = useState({ value: '', error: '' });
-  
-    const _logout = () => {
-      fetch('http://159.89.153.162:5000/api/v1/auth/logout', {
-        method: 'GET'
-      });
-      navigation.navigate('Home');
-    }
+    const [homephone, setHomePhone] = useState({ value: user.homePhone, error: '' });
+    const [workphone, setWorkPhone] = useState({ value: user.workPhone, error: '' });
+    const [cellphone, setCellPhone] = useState({ value: user.cellPhone, error: '' });
+    const [address, setAddress] = useState({ value: user.address, error: '' });
 
     const _updateUser = () => {
         const firstNameError = nameValidator(firstname.value);
@@ -78,10 +72,7 @@ const UpdateUserInformation = ({ navigation, route }) => {
     return (
       <Background>
         <Logo />
-        <Header>Update User Information</Header>
-        <Button mode="outlined" onPress={_logout}>
-          Logout
-        </Button>
+        <Header>Update User</Header>
         <TextInput
         label="First Name"
         returnKeyType="next"

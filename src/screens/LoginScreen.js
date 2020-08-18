@@ -36,8 +36,16 @@ const LoginScreen = ({ navigation }) => {
         body: JSON.stringify(data)
       }).then((response) => response.json())
       .then((json) => {
-        token = json.token;
-        navigation.navigate('Dashboard', { token: token });
+        if (json.success !== undefined && json.success === false) {
+          if (json.error === "Invalid credentials - username.") {
+            setEmail({ value: email.value , error: 'Invalid Email' });
+          } else if (json.error === "Invalid credentials - password.") {
+            setPassword({ value: password.value, error: 'Invalid Password' });
+          }
+        } else {
+          token = json.token;
+          navigation.navigate('Dashboard', { token: token });
+        }
       });
     }
   };

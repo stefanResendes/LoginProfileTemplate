@@ -5,43 +5,46 @@ import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
+import TextArea from '../components/TextArea.js';
 import { nameValidator, emailValidator, passwordValidator } from '../core/utils';
 
 const CreateUpdateProfile = ({ navigation, route }) => {
 
     const { token } = route.params;
     const { profile } = route.params;
+    const { action } = route.params;
 
-    const [homephone, setHomePhone] = useState({ value: '', error: '' });
-    const [workphone, setWorkPhone] = useState({ value: '', error: '' });
-    const [cellphone, setCellPhone] = useState({ value: '', error: '' });
-    const [address, setAddress] = useState({ value: '', error: '' });
-  
-    const _logout = () => {
-      fetch('http://159.89.153.162:5000/api/v1/auth/logout', {
-        method: 'GET'
-      });
-      navigation.navigate('Home');
-    }
+    const [homephone, setHomePhone] = useState({ value: profile.homePhone, error: '' });
+    const [workphone, setWorkPhone] = useState({ value: profile.workPhone, error: '' });
+    const [cellphone, setCellPhone] = useState({ value: profile.cellPhone, error: '' });
+    const [address, setAddress] = useState({ value: profile.address, error: '' });
+    const [bio, setBio] = useState({ value: profile.bio, error: '' });
+    const [hobbies, setHobbies] = useState({ value: profile.hobbies.join(', '), error: '' });
   
     const _createProfile = () => {
         const homePhoneError = nameValidator(homephone.value); //Change to validate phone
         const workPhoneError = nameValidator(workphone.value); //Change to validate phone
         const cellPhoneError = nameValidator(cellphone.value); //Change to validate phone
         const addressError = nameValidator(address.value); //Change to validate address
+        const bioError = nameValidator(bio.value); //Change to validate bio
 
-        if (homePhoneError || workPhoneError || cellPhoneError || addressError) {
+        var hobbiesArray = hobbies.value.split(', ');
+
+        if (homePhoneError || workPhoneError || cellPhoneError || addressError || bioError) {
             setHomePhone({ ...homephone, error: homePhoneError });
             setWorkPhone({ ...workphone, error: workPhoneError });
             setCellPhone({ ...cellphone, error: cellPhoneError });
             setAddress({ ...address, error: addressError });
+            setBio({ ...bio, error: bioError });
             return;
         } else {
             var data = {
                 cellPhone: cellphone.value,
                 homePhone: homephone.value,
                 workPhone: workphone.value,
-                address: address.value
+                address: address.value,
+                bio: bio.value,
+                hobbies: hobbiesArray
             }
             fetch('http://159.89.153.162:5000/api/v1/profile', {
                 method: 'POST',
@@ -58,11 +61,7 @@ const CreateUpdateProfile = ({ navigation, route }) => {
     return (
         <Background>
             <Logo />
-            <Header>Update User Information</Header>
-            <Button mode="outlined" onPress={_logout}>
-                Logout
-            </Button>
-
+            <Header>{action} Profile</Header>
             <TextInput
                 label="Home Phone"
                 returnKeyType="next"
@@ -99,8 +98,26 @@ const CreateUpdateProfile = ({ navigation, route }) => {
                 errorText={address.error}
             />
 
+            <TextArea
+                label="Bio"
+                returnKeyType="next"
+                value={bio.value}
+                onChangeText={text => setBio({ value: text, error: '' })}
+                error={!!bio.error}
+                errorText={bio.error}
+            />
+
+            <TextArea
+                label="Hobbies"
+                returnKeyType="next"
+                value={hobbies.value}
+                onChangeText={text => setHobbies({ value: text, error: '' })}
+                error={!!hobbies.error}
+                errorText={hobbies.error}
+            />
+
             <Button mode="outlined" onPress={_createProfile}>
-                Create Profile
+                {action} Profile
             </Button>
         </Background>
     );

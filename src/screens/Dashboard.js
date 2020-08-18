@@ -8,7 +8,6 @@ import Button from '../components/Button';
 const Dashboard = ({ navigation, route }) => {
 
   const { token } = route.params;
-  const [profile, setProfile] = useState([]);
 
   const _logout = () => {
     fetch('http://159.89.153.162:5000/api/v1/auth/logout', {
@@ -17,8 +16,8 @@ const Dashboard = ({ navigation, route }) => {
     navigation.navigate('Home');
   }
 
-  const _getProfile = () => {
-    fetch('http://159.89.153.162:5000/api/v1/profile/me', {
+  const _getUserAndNavigate = () => {
+    fetch('http://159.89.153.162:5000/api/v1/auth/me', {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -28,7 +27,25 @@ const Dashboard = ({ navigation, route }) => {
     }).then((response) => response.json())
     .then((json) => {
       console.log(json);
-      setProfile(json);
+      navigation.navigate('UpdateUserInformation', { token: token, user: json.data });
+    });
+  }
+
+  const _getProfileAndNavigate = () => {
+    fetch('http://159.89.153.162:5000/api/v1/profile/me', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      }
+    }).then((response) => response.json())
+    .then((json) => {
+      if (json.success !== undefined && json.success === false) {
+        navigation.navigate('CreateUpdateProfile', { token: token, profile: {homePhone: '', workPhone: '', cellPhone: '', address: '', bio: '', hobbies: []}, action: 'Create' });
+      } else {
+        navigation.navigate('CreateUpdateProfile', { token: token, profile: json, action: 'Update' });
+      }
     });
   }
 
@@ -43,14 +60,14 @@ const Dashboard = ({ navigation, route }) => {
       <Button mode="outlined" onPress={_logout}>
         Logout
       </Button>
-      <Button mode="outlined" onPress={() => navigation.navigate('UpdateUserInformation', { token: token })}>
+      {/* <Button mode="outlined" onPress={() => navigation.navigate('UpdateUserInformation', { token: token })}>
+        Update User
+      </Button> */}
+      <Button mode="outlined" onPress={_getUserAndNavigate}>
         Update User
       </Button>
-      <Button mode="outlined" onPress={() => navigation.navigate('CreateUpdateProfile', { token: token, profile: profile })}>
+      <Button mode="outlined" onPress={_getProfileAndNavigate}>
         Create/Update Profile
-      </Button>
-      <Button mode="outlined" onPress={_getProfile}>
-        Get Profile
       </Button>
     </Background>
   );
