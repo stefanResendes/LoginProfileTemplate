@@ -60,9 +60,6 @@ const Dashboard = ({ navigation, route }) => {
       <Button mode="outlined" onPress={_logout}>
         Logout
       </Button>
-      {/* <Button mode="outlined" onPress={() => navigation.navigate('UpdateUserInformation', { token: token })}>
-        Update User
-      </Button> */}
       <Button mode="outlined" onPress={_getUserAndNavigate}>
         Update User
       </Button>

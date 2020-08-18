@@ -3,7 +3,6 @@
     "name": "React Native Simple Login Template",
     "slug": "react-native-simple-login-template",
     "privacy": "public",
-    "sdkVersion": "35.0.0",
     "platforms": [
       "ios",
       "android",
