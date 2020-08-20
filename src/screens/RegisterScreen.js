@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
+import { StackActions } from '@react-navigation/native';
 import {
   emailValidator,
   passwordValidator,
@@ -46,16 +47,14 @@ const RegisterScreen = ({ navigation }) => {
         },
         body: JSON.stringify(data)
       });
-      navigation.navigate('Login');
+      navigation.dispatch(
+        StackActions.replace('Login')
+        );
     }
   };
 
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
-
-      <Logo />
-
       <Header>Create Account</Header>
 
       <TextInput
@@ -105,7 +104,9 @@ const RegisterScreen = ({ navigation }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+        <TouchableOpacity onPress={() => navigation.dispatch(
+          StackActions.replace('LoginScreen')
+          )}>
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>

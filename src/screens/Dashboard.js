@@ -7,6 +7,7 @@ import Button from '../components/Button';
 import * as ImagePicker from 'expo-image-picker';
 import { Image, Platform, ScrollView } from 'react-native';
 import global from '../global.js';
+import { StackActions } from '@react-navigation/native';
 
 const Dashboard = ({ navigation, route }) => {
 
@@ -25,7 +26,9 @@ const Dashboard = ({ navigation, route }) => {
     global.Token = '';
     global.User = '';
     global.Profile = '';
-    navigation.navigate('Home');
+    navigation.dispatch(
+      StackActions.replace('Home')
+    )
   }
 
   const _handleChoosePhoto = async () => {

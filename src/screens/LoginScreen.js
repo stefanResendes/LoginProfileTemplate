@@ -9,16 +9,14 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 import global from '../global.js';
+import { StackActions } from '@react-navigation/native';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
 
-  global.Profile = {homePhone: '', workPhone: '', cellPhone: '', address: '', bio: '', hobbies: []};
-  global.User = '';
-  global.Token = '';
-
   const _onLoginPressed = () => {
+
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
@@ -73,7 +71,10 @@ const LoginScreen = ({ navigation }) => {
         if (global.Profile.homePhone === '') {
           navigation.navigate('CreateUpdateProfile', { action: 'Create' });
         } else {
-          navigation.navigate('Dashboard');
+         /*  navigation.navigate('Dashboard'); */
+         navigation.dispatch(
+           StackActions.replace('Dashboard')
+         )
         }
       });
     }
@@ -144,7 +145,9 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
+        <TouchableOpacity onPress={() => navigation.dispatch(
+          StackActions.replace('RegisterScreen')
+          )}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
