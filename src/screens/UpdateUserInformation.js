@@ -6,21 +6,19 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import { nameValidator, emailValidator, passwordValidator } from '../core/utils';
+import global from '../global.js';
 
 const UpdateUserInformation = ({ navigation, route }) => {
 
-    const { token } = route.params;
-    const { user } = route.params;
-
-    const [firstname, setFirstName] = useState({ value: user.firstName, error: '' });
-    const [lastname, setLastName] = useState({ value: user.lastName, error: '' });
-    const [middlename, setMiddleName] = useState({ value: user.middleName, error: '' });
-    const [email, setEmail] = useState({ value: user.email, error: '' });
+    const [firstname, setFirstName] = useState({ value: global.User.firstName, error: '' });
+    const [lastname, setLastName] = useState({ value: global.User.lastName, error: '' });
+    const [middlename, setMiddleName] = useState({ value: global.User.middleName, error: '' });
+    const [email, setEmail] = useState({ value: global.User.email, error: '' });
     const [updateuserpass, setUpdateUserPass] = useState({ value: '', error: '' });
-    const [homephone, setHomePhone] = useState({ value: user.homePhone, error: '' });
-    const [workphone, setWorkPhone] = useState({ value: user.workPhone, error: '' });
-    const [cellphone, setCellPhone] = useState({ value: user.cellPhone, error: '' });
-    const [address, setAddress] = useState({ value: user.address, error: '' });
+    const [homephone, setHomePhone] = useState({ value: global.User.homePhone, error: '' });
+    const [workphone, setWorkPhone] = useState({ value: global.User.workPhone, error: '' });
+    const [cellphone, setCellPhone] = useState({ value: global.User.cellPhone, error: '' });
+    const [address, setAddress] = useState({ value: global.User.address, error: '' });
 
     const _updateUser = () => {
         const firstNameError = nameValidator(firstname.value);

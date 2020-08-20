@@ -8,10 +8,15 @@ import TextInput from '../components/TextInput';
 import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
+import global from '../global.js';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
+
+  global.Profile = {homePhone: '', workPhone: '', cellPhone: '', address: '', bio: '', hobbies: []};
+  global.User = '';
+  global.Token = '';
 
   const _onLoginPressed = () => {
     const emailError = emailValidator(email.value);
@@ -43,20 +48,64 @@ const LoginScreen = ({ navigation }) => {
             setPassword({ value: password.value, error: 'Invalid Password' });
           }
         } else {
-          token = json.token;
-          navigation.navigate('Dashboard', { token: token });
+          global.Token = json.token;
+        }
+      }).then(() => {
+        return _getUser(global.Token);
+      }).then((res) => res.json())
+      .then((json) =>  {
+        global.User = json.data;
+      }).then(() => {
+        return _getProfile(global.Token);
+      }).then((res) => res.json())
+      .then((json) => {
+        if (json.success !== undefined && json.success === false) {
+          global.Profile = {homePhone: '', workPhone: '', cellPhone: '', address: '', bio: '', hobbies: []};
+        } else {
+          global.Profile = json;
+        }
+      }).then(() => {
+        console.log(global.Token);
+        console.log(global.User);
+        console.log(global.Profile);
+        console.log(global.Profile.homePhone);
+
+        if (global.Profile.homePhone === '') {
+          navigation.navigate('CreateUpdateProfile', { action: 'Create' });
+        } else {
+          navigation.navigate('Dashboard');
         }
       });
     }
   };
 
+  const _getUser = (tok) => {
+    return fetch('http://159.89.153.162:5000/api/v1/auth/me', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + tok
+      }
+    });
+  }
+
+  const _getProfile = (tok) => {
+    return fetch('http://159.89.153.162:5000/api/v1/profile/me', {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + tok
+      }
+    });
+  }
+
   return (
     <Background>
-      <BackButton goBack={() => navigation.navigate('HomeScreen')} />
-
       <Logo />
 
-      <Header>Welcome back.</Header>
+      <Header>Welcome Back.</Header>
 
       <TextInput
         label="Email"

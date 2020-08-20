@@ -7,12 +7,12 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import TextArea from '../components/TextArea.js';
 import { nameValidator, emailValidator, passwordValidator } from '../core/utils';
+import global from '../global.js';
 
 const CreateUpdateProfile = ({ navigation, route }) => {
-
-    const { token } = route.params;
-    const { profile } = route.params;
     const { action } = route.params;
+
+    const profile = global.Profile;
 
     const [homephone, setHomePhone] = useState({ value: profile.homePhone, error: '' });
     const [workphone, setWorkPhone] = useState({ value: profile.workPhone, error: '' });
@@ -51,11 +51,29 @@ const CreateUpdateProfile = ({ navigation, route }) => {
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + token
+                    'Authorization': 'Bearer ' + global.Token
                 },
                 body: JSON.stringify(data)
             });
         }
+
+        _updateGlobalProfile();
+    }
+
+    const _updateGlobalProfile = () => {
+        var hobbiesArray = hobbies.value.split(', ');
+        console.log(hobbiesArray);
+
+        global.Profile.cellPhone = cellphone.value;
+        global.Profile.homePhone = homephone.value;
+        global.Profile.workPhone = workphone.value;
+        global.Profile.address = address.value;
+        global.Profile.bio = bio.value;
+        global.Profile.hobbies = hobbiesArray
+
+        console.log(global.Profile);
+
+        navigation.navigate('Dashboard');
     }
 
     return (
