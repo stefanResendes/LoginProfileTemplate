@@ -1,35 +1,43 @@
 import React, { memo, useState, useEffect } from 'react';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
+import AppMenu from '../components/Menu.js';
 import * as ImagePicker from 'expo-image-picker';
-import { Image, Platform, ScrollView } from 'react-native';
+import { Image, Text, ScrollView, View } from 'react-native';
 import global from '../global.js';
-import { StackActions } from '@react-navigation/native';
+import ProfileDisplay from '../components/ProfileDisplay.js';
+
+import { theme } from '../core/theme';
 
 const Dashboard = ({ navigation, route }) => {
 
+  const _formatPhone = number => {
+    return (
+      '(' +
+      number.charAt(0) +
+      number.charAt(1) +
+      number.charAt(2) +
+      ') ' +
+      number.charAt(3) +
+      number.charAt(4) +
+      number.charAt(5) +
+      '-' +
+      number.charAt(6) +
+      number.charAt(7) +
+      number.charAt(8) +
+      number.charAt(9)
+    );
+  };
+
   const [photo, setPhoto] = useState(null);
-  const [profileHomePhone, setProfileHomePhone] = useState(global.Profile.homePhone);
-  const [profileWorkPhone, setProfileWorkPhone] = useState(global.Profile.workPhone);
-  const [profileCellPhone, setProfileCellPhone] = useState(global.Profile.cellPhone);
+  const [profileHomePhone, setProfileHomePhone] = useState(_formatPhone(global.Profile.homePhone));
+  const [profileWorkPhone, setProfileWorkPhone] = useState(_formatPhone(global.Profile.workPhone));
+  const [profileCellPhone, setProfileCellPhone] = useState(_formatPhone(global.Profile.cellPhone));
   const [profileAddress, setProfileAddress] = useState(global.Profile.address);
   const [profileBio, setProfileBio] = useState(global.Profile.bio);
   const [profileHobbies, setProfileHobbies] = useState(global.Profile.hobbies.join(', '));
-
-  const _logout = () => {
-    fetch('http://159.89.153.162:5000/api/v1/auth/logout', {
-      method: 'GET'
-    });
-    global.Token = '';
-    global.User = '';
-    global.Profile = '';
-    navigation.dispatch(
-      StackActions.replace('Home')
-    )
-  }
 
   const _handleChoosePhoto = async () => {
     try {
@@ -81,18 +89,10 @@ const Dashboard = ({ navigation, route }) => {
     });
   }
 
-  const _navUpdateUserInfo = () => {
-    navigation.navigate('UpdateUserInformation');
-  }
-
-  const _navCreateUpdateProfile = () => {
-    navigation.navigate('CreateUpdateProfile', { action: 'Update' });
-  }
-
   const _refreshPage = () => {
-    setProfileHomePhone(global.Profile.homePhone);
-    setProfileWorkPhone(global.Profile.workPhone);
-    setProfileCellPhone(global.Profile.cellPhone);
+    setProfileHomePhone(_formatPhone(global.Profile.homePhone));
+    setProfileWorkPhone(_formatPhone(global.Profile.workPhone));
+    setProfileCellPhone(_formatPhone(global.Profile.cellPhone));
     setProfileAddress(global.Profile.address);
     setProfileBio(global.Profile.bio);
     setProfileHobbies(global.Profile.hobbies.join(', '));
@@ -101,52 +101,45 @@ const Dashboard = ({ navigation, route }) => {
   return (
     <Background>
       <ScrollView>
-      {photo && (
-        <Image
-          source={{ uri: photo.uri }}
-          style={{ width: 300, height: 300 }}
-        />
-      )}
-      <Header>{global.User.firstName} {global.User.lastName}</Header>
-      <Paragraph>
-        Home Phone: {profileHomePhone}
-      </Paragraph>
-      <Paragraph>
-        Work Phone: {profileWorkPhone}
-      </Paragraph>
-      <Paragraph>
-        Cell Phone: {profileCellPhone}
-      </Paragraph>
-      <Paragraph>
-        Address: {profileAddress}
-      </Paragraph>
-      <Paragraph>
-        Bio: {profileBio}
-      </Paragraph>
-      <Paragraph>
-        Hobbies: {profileHobbies}
-      </Paragraph>
-      <Button mode="outlined" onPress={_refreshPage}>
-        Refresh
-      </Button>
-      <Button mode="outlined" onPress={_logout}>
-        Logout
-      </Button>
-      <Button mode="outlined" onPress={_navUpdateUserInfo}>
-        Update User
-      </Button>
-      <Button mode="outlined" onPress={_navCreateUpdateProfile}>
-        Update Profile
-      </Button>
-      <Button mode="outlined" onPress={_handleChoosePhoto}>
-        Choose Photo
-      </Button>
-      <Button mode="outlined" onPress={_uploadPhoto}>
-        Send Photo
-      </Button>
-      <Button mode="outlined" onPress={_getPhoto}>
-        Get Photo
-      </Button>
+
+        <AppMenu/>
+        {photo && (
+          <Image
+            source={{ uri: photo.uri }}
+            style={{ width: 300, height: 300 }}
+          />
+        )}
+        <Header style={{ justifyContent: 'Center' }}>{global.User.firstName} {global.User.lastName}</Header>
+        <ProfileDisplay title="Home Phone">
+          {profileHomePhone}
+        </ProfileDisplay>
+        <ProfileDisplay title="Work Phone">
+          {profileWorkPhone}
+        </ProfileDisplay>
+        <ProfileDisplay title="Cell Phone">
+          {profileCellPhone}
+        </ProfileDisplay>
+        <ProfileDisplay title="Address">
+          {profileAddress}
+        </ProfileDisplay>
+        <ProfileDisplay title="Bio">
+          {profileBio}
+        </ProfileDisplay>
+        <ProfileDisplay title="Hobbies">
+          {profileHobbies}
+        </ProfileDisplay>
+        <Button mode="outlined" onPress={_refreshPage}>
+          Refresh
+        </Button>
+        <Button mode="outlined" onPress={_handleChoosePhoto}>
+          Choose Photo
+        </Button>
+        <Button mode="outlined" onPress={_uploadPhoto}>
+          Send Photo
+        </Button>
+        <Button mode="outlined" onPress={_getPhoto}>
+          Get Photo
+        </Button>
       </ScrollView>
     </Background>
   );

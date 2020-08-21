@@ -16,7 +16,6 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState({ value: '', error: '' });
 
   const _onLoginPressed = () => {
-
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
 
@@ -25,87 +24,95 @@ const LoginScreen = ({ navigation }) => {
       setPassword({ ...password, error: passwordError });
       return;
     } else {
-      var token = '';
       var data = {
         email: email.value,
-        password: password.value
-      }
+        password: password.value,
+      };
       fetch('http://159.89.153.162:5000/api/v1/auth/login', {
         method: 'POST',
         headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
-      }).then((response) => response.json())
-      .then((json) => {
-        if (json.success !== undefined && json.success === false) {
-          if (json.error === "Invalid credentials - username.") {
-            setEmail({ value: email.value , error: 'Invalid Email' });
-          } else if (json.error === "Invalid credentials - password.") {
-            setPassword({ value: password.value, error: 'Invalid Password' });
+        body: JSON.stringify(data),
+      })
+        .then(response => response.json())
+        .then(json => {
+          if (json.success !== undefined && json.success === false) {
+            if (json.error === 'Invalid credentials - username.') {
+              setEmail({ value: email.value, error: 'Invalid Email' });
+            } else if (json.error === 'Invalid credentials - password.') {
+              setPassword({ value: password.value, error: 'Invalid Password' });
+            }
+          } else {
+            global.Token = json.token;
           }
-        } else {
-          global.Token = json.token;
-        }
-      }).then(() => {
-        return _getUser(global.Token);
-      }).then((res) => res.json())
-      .then((json) =>  {
-        global.User = json.data;
-      }).then(() => {
-        return _getProfile(global.Token);
-      }).then((res) => res.json())
-      .then((json) => {
-        if (json.success !== undefined && json.success === false) {
-          global.Profile = {homePhone: '', workPhone: '', cellPhone: '', address: '', bio: '', hobbies: []};
-        } else {
-          global.Profile = json;
-        }
-      }).then(() => {
-        console.log(global.Token);
-        console.log(global.User);
-        console.log(global.Profile);
-        console.log(global.Profile.homePhone);
+        })
+        .then(() => {
+          return _getUser(global.Token);
+        })
+        .then(res => res.json())
+        .then(json => {
+          global.User = json.data;
+        })
+        .then(() => {
+          return _getProfile(global.Token);
+        })
+        .then(res => res.json())
+        .then(json => {
+          if (json.success !== undefined && json.success === false) {
+            global.Profile = {
+              homePhone: '',
+              workPhone: '',
+              cellPhone: '',
+              address: '',
+              bio: '',
+              hobbies: [],
+            };
+          } else {
+            global.Profile = json;
+          }
+        })
+        .then(() => {
+          console.log(global.Token);
+          console.log(global.User);
+          console.log(global.Profile);
+          console.log(global.Profile.homePhone);
 
-        if (global.Profile.homePhone === '') {
-          navigation.navigate('CreateUpdateProfile', { action: 'Create' });
-        } else {
-         /*  navigation.navigate('Dashboard'); */
-         navigation.dispatch(
-           StackActions.replace('Dashboard')
-         )
-        }
-      });
+          if (global.Profile.homePhone === '') {
+            navigation.navigate('CreateUpdateProfile', { action: 'Create' });
+          } else {
+            /*  navigation.navigate('Dashboard'); */
+            navigation.dispatch(StackActions.replace('Dashboard'));
+          }
+        });
     }
   };
 
-  const _getUser = (tok) => {
+  const _getUser = tok => {
     return fetch('http://159.89.153.162:5000/api/v1/auth/me', {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + tok
-      }
+        Authorization: 'Bearer ' + tok,
+      },
     });
-  }
+  };
 
-  const _getProfile = (tok) => {
+  const _getProfile = tok => {
     return fetch('http://159.89.153.162:5000/api/v1/profile/me', {
       method: 'GET',
       headers: {
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + tok
-      }
+        Authorization: 'Bearer ' + tok,
+      },
     });
-  }
+  };
 
   return (
     <Background>
-      <Logo />
-
       <Header>Welcome Back.</Header>
 
       <TextInput
@@ -145,9 +152,11 @@ const LoginScreen = ({ navigation }) => {
 
       <View style={styles.row}>
         <Text style={styles.label}>Don’t have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.dispatch(
-          StackActions.replace('RegisterScreen')
-          )}>
+        <TouchableOpacity
+          onPress={() =>
+            navigation.dispatch(StackActions.replace('RegisterScreen'))
+          }
+        >
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>

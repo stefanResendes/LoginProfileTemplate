@@ -6,139 +6,163 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import TextArea from '../components/TextArea.js';
-import { nameValidator, emailValidator, passwordValidator } from '../core/utils';
+import {
+  nameValidator,
+  emailValidator,
+  passwordValidator,
+} from '../core/utils';
+import { Image, Text, ScrollView, View } from 'react-native';
 import global from '../global.js';
 
 const CreateUpdateProfile = ({ navigation, route }) => {
-    const { action } = route.params;
+  const { action } = route.params;
 
-    const profile = global.Profile;
+  const profile = global.Profile;
 
-    const [homephone, setHomePhone] = useState({ value: profile.homePhone, error: '' });
-    const [workphone, setWorkPhone] = useState({ value: profile.workPhone, error: '' });
-    const [cellphone, setCellPhone] = useState({ value: profile.cellPhone, error: '' });
-    const [address, setAddress] = useState({ value: profile.address, error: '' });
-    const [bio, setBio] = useState({ value: profile.bio, error: '' });
-    const [hobbies, setHobbies] = useState({ value: profile.hobbies.join(', '), error: '' });
-  
-    const _createProfile = () => {
-        const homePhoneError = nameValidator(homephone.value); //Change to validate phone
-        const workPhoneError = nameValidator(workphone.value); //Change to validate phone
-        const cellPhoneError = nameValidator(cellphone.value); //Change to validate phone
-        const addressError = nameValidator(address.value); //Change to validate address
-        const bioError = nameValidator(bio.value); //Change to validate bio
+  const [homephone, setHomePhone] = useState({
+    value: profile.homePhone,
+    error: '',
+  });
+  const [workphone, setWorkPhone] = useState({
+    value: profile.workPhone,
+    error: '',
+  });
+  const [cellphone, setCellPhone] = useState({
+    value: profile.cellPhone,
+    error: '',
+  });
+  const [address, setAddress] = useState({ value: profile.address, error: '' });
+  const [bio, setBio] = useState({ value: profile.bio, error: '' });
+  const [hobbies, setHobbies] = useState({
+    value: profile.hobbies.join(', '),
+    error: '',
+  });
 
-        var hobbiesArray = hobbies.value.split(', ');
+  const _createProfile = () => {
+    const homePhoneError = nameValidator(homephone.value); //Change to validate phone
+    const workPhoneError = nameValidator(workphone.value); //Change to validate phone
+    const cellPhoneError = nameValidator(cellphone.value); //Change to validate phone
+    const addressError = nameValidator(address.value); //Change to validate address
+    const bioError = nameValidator(bio.value); //Change to validate bio
 
-        if (homePhoneError || workPhoneError || cellPhoneError || addressError || bioError) {
-            setHomePhone({ ...homephone, error: homePhoneError });
-            setWorkPhone({ ...workphone, error: workPhoneError });
-            setCellPhone({ ...cellphone, error: cellPhoneError });
-            setAddress({ ...address, error: addressError });
-            setBio({ ...bio, error: bioError });
-            return;
-        } else {
-            var data = {
-                cellPhone: cellphone.value,
-                homePhone: homephone.value,
-                workPhone: workphone.value,
-                address: address.value,
-                bio: bio.value,
-                hobbies: hobbiesArray
-            }
-            fetch('http://159.89.153.162:5000/api/v1/profile', {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + global.Token
-                },
-                body: JSON.stringify(data)
-            });
-        }
+    var hobbiesArray = hobbies.value.split(', ');
 
-        _updateGlobalProfile();
+    if (
+      homePhoneError ||
+      workPhoneError ||
+      cellPhoneError ||
+      addressError ||
+      bioError
+    ) {
+      setHomePhone({ ...homephone, error: homePhoneError });
+      setWorkPhone({ ...workphone, error: workPhoneError });
+      setCellPhone({ ...cellphone, error: cellPhoneError });
+      setAddress({ ...address, error: addressError });
+      setBio({ ...bio, error: bioError });
+      return;
+    } else {
+      var data = {
+        cellPhone: cellphone.value,
+        homePhone: homephone.value,
+        workPhone: workphone.value,
+        address: address.value,
+        bio: bio.value,
+        hobbies: hobbiesArray,
+      };
+      fetch('http://159.89.153.162:5000/api/v1/profile', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + global.Token,
+        },
+        body: JSON.stringify(data),
+      });
     }
 
-    const _updateGlobalProfile = () => {
-        var hobbiesArray = hobbies.value.split(', ');
-        console.log(hobbiesArray);
+    _updateGlobalProfile();
+  };
 
-        global.Profile.cellPhone = cellphone.value;
-        global.Profile.homePhone = homephone.value;
-        global.Profile.workPhone = workphone.value;
-        global.Profile.address = address.value;
-        global.Profile.bio = bio.value;
-        global.Profile.hobbies = hobbiesArray
+  const _updateGlobalProfile = () => {
+    var hobbiesArray = hobbies.value.split(', ');
+    console.log(hobbiesArray);
 
-        console.log(global.Profile);
+    global.Profile.cellPhone = cellphone.value;
+    global.Profile.homePhone = homephone.value;
+    global.Profile.workPhone = workphone.value;
+    global.Profile.address = address.value;
+    global.Profile.bio = bio.value;
+    global.Profile.hobbies = hobbiesArray;
 
-        navigation.navigate('Dashboard');
-    }
+    console.log(global.Profile);
 
-    return (
-        <Background>
-            <Logo />
-            <Header>{action} Profile</Header>
-            <TextInput
-                label="Home Phone"
-                returnKeyType="next"
-                value={homephone.value}
-                onChangeText={text => setHomePhone({ value: text, error: '' })}
-                error={!!homephone.error}
-                errorText={homephone.error}
-            />
+    navigation.navigate('Dashboard');
+  };
 
-            <TextInput
-                label="Work Phone"
-                returnKeyType="next"
-                value={workphone.value}
-                onChangeText={text => setWorkPhone({ value: text, error: '' })}
-                error={!!workphone.error}
-                errorText={workphone.error}
-            />
+  return (
+    <Background>
+      <ScrollView>
+        <Header>{action} Profile</Header>
+        <TextInput
+          label="Home Phone"
+          returnKeyType="next"
+          value={homephone.value}
+          onChangeText={text => setHomePhone({ value: text, error: '' })}
+          error={!!homephone.error}
+          errorText={homephone.error}
+        />
 
-            <TextInput
-                label="Cell Phone"
-                returnKeyType="next"
-                value={cellphone.value}
-                onChangeText={text => setCellPhone({ value: text, error: '' })}
-                error={!!cellphone.error}
-                errorText={cellphone.error}
-            />
+        <TextInput
+          label="Work Phone"
+          returnKeyType="next"
+          value={workphone.value}
+          onChangeText={text => setWorkPhone({ value: text, error: '' })}
+          error={!!workphone.error}
+          errorText={workphone.error}
+        />
 
-            <TextInput
-                label="Address"
-                returnKeyType="next"
-                value={address.value}
-                onChangeText={text => setAddress({ value: text, error: '' })}
-                error={!!address.error}
-                errorText={address.error}
-            />
+        <TextInput
+          label="Cell Phone"
+          returnKeyType="next"
+          value={cellphone.value}
+          onChangeText={text => setCellPhone({ value: text, error: '' })}
+          error={!!cellphone.error}
+          errorText={cellphone.error}
+        />
 
-            <TextArea
-                label="Bio"
-                returnKeyType="next"
-                value={bio.value}
-                onChangeText={text => setBio({ value: text, error: '' })}
-                error={!!bio.error}
-                errorText={bio.error}
-            />
+        <TextInput
+          label="Address"
+          returnKeyType="next"
+          value={address.value}
+          onChangeText={text => setAddress({ value: text, error: '' })}
+          error={!!address.error}
+          errorText={address.error}
+        />
 
-            <TextArea
-                label="Hobbies"
-                returnKeyType="next"
-                value={hobbies.value}
-                onChangeText={text => setHobbies({ value: text, error: '' })}
-                error={!!hobbies.error}
-                errorText={hobbies.error}
-            />
+        <TextArea
+          label="Bio"
+          returnKeyType="next"
+          value={bio.value}
+          onChangeText={text => setBio({ value: text, error: '' })}
+          error={!!bio.error}
+          errorText={bio.error}
+        />
 
-            <Button mode="outlined" onPress={_createProfile}>
-                {action} Profile
-            </Button>
-        </Background>
-    );
-  }
-  
-  export default memo(CreateUpdateProfile);
+        <TextArea
+          label="Hobbies"
+          returnKeyType="next"
+          value={hobbies.value}
+          onChangeText={text => setHobbies({ value: text, error: '' })}
+          error={!!hobbies.error}
+          errorText={hobbies.error}
+        />
+
+        <Button mode="outlined" onPress={_createProfile}>
+          {action} Profile
+        </Button>
+      </ScrollView>
+    </Background>
+  );
+};
+
+export default memo(CreateUpdateProfile);

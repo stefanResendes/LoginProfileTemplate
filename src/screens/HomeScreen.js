@@ -8,12 +8,7 @@ import { StackActions } from '@react-navigation/native';
 
 const HomeScreen = ({ navigation }) => (
   <Background>
-    <Logo />
     <Header>Login Template</Header>
-
-    <Paragraph>
-      The easiest way to start with your amazing application.
-    </Paragraph>
     <Button mode="contained" onPress={() => navigation.dispatch(
       StackActions.replace('LoginScreen')
       )}>
