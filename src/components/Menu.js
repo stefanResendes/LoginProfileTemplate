@@ -31,19 +31,37 @@ const AppMenu = () => {
         navigation.navigate('CreateUpdateProfile', { action: 'Update' });
     }
 
+    const _navClockInOut = () => {
+        closeMenu();
+        navigation.navigate('ClockInOut');
+    }
+
+    const _navTimeSummary = () => {
+      closeMenu();
+      navigation.navigate('TimeSummary');
+    }
+
     return (
-        <Menu
-            visible={visible}
-            onDismiss={closeMenu}
-            anchor={<TouchableOpacity onPress={openMenu}><Image style={{ width: 24, height: 24 }} source={require('../assets/menu_icon.png')}/></TouchableOpacity>}>
-
-            {/* <TouchableOpacity onPress={openMenu}><Image style={{ width: 24, height: 24 }} source={require('../assets/menu_icon.png')}/></TouchableOpacity> */}
-
-            <Menu.Item onPress={ _logout } title="Logout" />
-            <Divider />    
-            <Menu.Item onPress={ _navUpdateUserInfo } title="Update User" />
-            <Menu.Item onPress={ _navCreateUpdateProfile } title="Update Profile" />
-        </Menu>
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <TouchableOpacity onPress={openMenu}>
+            <Image
+              style={{ width: 24, height: 24 }}
+              source={require('../assets/menu_icon.png')}
+            />
+          </TouchableOpacity>
+        }
+      >
+        <Menu.Item onPress={_logout} title="Logout" />
+        <Divider />
+        <Menu.Item onPress={_navUpdateUserInfo} title="Update User" />
+        <Menu.Item onPress={_navCreateUpdateProfile} title="Update Profile" />
+        <Divider />
+        <Menu.Item onPress={_navClockInOut} title="Clock Screen" />
+        <Menu.Item onPress={_navTimeSummary} title="Time Summary" />
+      </Menu>
     );
 };
 

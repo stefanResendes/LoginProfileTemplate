@@ -5,7 +5,7 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import AppMenu from '../components/Menu.js';
 import * as ImagePicker from 'expo-image-picker';
-import { Image, Text, ScrollView, View } from 'react-native';
+import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import global from '../global.js';
 import ProfileDisplay from '../components/ProfileDisplay.js';
 
@@ -68,7 +68,6 @@ const Dashboard = ({ navigation, route }) => {
   }
 
   const _uploadPhoto = () => {
-    console.log(global.Token);
 
     var token = global.Token;
 
@@ -101,33 +100,52 @@ const Dashboard = ({ navigation, route }) => {
   return (
     <Background>
       <ScrollView>
-
-        <AppMenu/>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-start',
+            }}
+          >
+            <AppMenu />
+          </View>
+          <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <TouchableOpacity onPress={_refreshPage}>
+              <Image
+                style={{ width: 24, height: 24 }}
+                source={require('../assets/refresh_icon.png')}
+              />
+            </TouchableOpacity>
+          </View>
+        </View>
         {photo && (
           <Image
             source={{ uri: photo.uri }}
             style={{ width: 300, height: 300 }}
           />
         )}
-        <Header style={{ justifyContent: 'Center' }}>{global.User.firstName} {global.User.lastName}</Header>
-        <ProfileDisplay title="Home Phone">
-          {profileHomePhone}
-        </ProfileDisplay>
-        <ProfileDisplay title="Work Phone">
-          {profileWorkPhone}
-        </ProfileDisplay>
-        <ProfileDisplay title="Cell Phone">
-          {profileCellPhone}
-        </ProfileDisplay>
-        <ProfileDisplay title="Address">
-          {profileAddress}
-        </ProfileDisplay>
-        <ProfileDisplay title="Bio">
-          {profileBio}
-        </ProfileDisplay>
-        <ProfileDisplay title="Hobbies">
-          {profileHobbies}
-        </ProfileDisplay>
+        <Header style={{ justifyContent: 'Center' }}>
+          {global.User.firstName} {global.User.lastName}
+        </Header>
+        <ProfileDisplay title="Home Phone">{profileHomePhone}</ProfileDisplay>
+        <ProfileDisplay title="Work Phone">{profileWorkPhone}</ProfileDisplay>
+        <ProfileDisplay title="Cell Phone">{profileCellPhone}</ProfileDisplay>
+        <ProfileDisplay title="Address">{profileAddress}</ProfileDisplay>
+        <ProfileDisplay title="Bio">{profileBio}</ProfileDisplay>
+        <ProfileDisplay title="Hobbies">{profileHobbies}</ProfileDisplay>
         <Button mode="outlined" onPress={_refreshPage}>
           Refresh
         </Button>
