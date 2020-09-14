@@ -41,6 +41,11 @@ const AppMenu = () => {
       navigation.navigate('TimeSummary');
     }
 
+    const _navContactScreen = () => {
+      closeMenu();
+      navigation.navigate('ContactsScreen');
+    }
+
     return (
       <Menu
         visible={visible}
@@ -61,6 +66,8 @@ const AppMenu = () => {
         <Divider />
         <Menu.Item onPress={_navClockInOut} title="Clock Screen" />
         <Menu.Item onPress={_navTimeSummary} title="Time Summary" />
+        <Divider />
+        <Menu.Item onPress={_navContactScreen} title="Contacts" />
       </Menu>
     );
 };

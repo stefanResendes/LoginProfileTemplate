@@ -49,7 +49,7 @@ const RegisterScreen = ({ navigation }) => {
         body: JSON.stringify(data)
       });
       navigation.dispatch(
-        StackActions.replace('Login')
+        StackActions.replace('LoginScreen')
         );
     }
   };

@@ -14,21 +14,26 @@ import { theme } from '../core/theme';
 const Dashboard = ({ navigation, route }) => {
 
   const _formatPhone = number => {
-    return (
-      '(' +
-      number.charAt(0) +
-      number.charAt(1) +
-      number.charAt(2) +
-      ') ' +
-      number.charAt(3) +
-      number.charAt(4) +
-      number.charAt(5) +
-      '-' +
-      number.charAt(6) +
-      number.charAt(7) +
-      number.charAt(8) +
-      number.charAt(9)
-    );
+      
+    if (number == undefined) {
+      return number;
+    } else {
+      return (
+        '(' +
+        number.charAt(0) +
+        number.charAt(1) +
+        number.charAt(2) +
+        ') ' +
+        number.charAt(3) +
+        number.charAt(4) +
+        number.charAt(5) +
+        '-' +
+        number.charAt(6) +
+        number.charAt(7) +
+        number.charAt(8) +
+        number.charAt(9)
+      );
+    }
   };
 
   const [photo, setPhoto] = useState(null);
@@ -37,7 +42,8 @@ const Dashboard = ({ navigation, route }) => {
   const [profileCellPhone, setProfileCellPhone] = useState(_formatPhone(global.Profile.cellPhone));
   const [profileAddress, setProfileAddress] = useState(global.Profile.address);
   const [profileBio, setProfileBio] = useState(global.Profile.bio);
-  const [profileHobbies, setProfileHobbies] = useState(global.Profile.hobbies.join(', '));
+  /* const [profileHobbies, setProfileHobbies] = useState(global.Profile.hobbies.join(', ')); */
+  const [profileHobbies, setProfileHobbies] = useState('');
 
   const _handleChoosePhoto = async () => {
     try {
@@ -146,9 +152,6 @@ const Dashboard = ({ navigation, route }) => {
         <ProfileDisplay title="Address">{profileAddress}</ProfileDisplay>
         <ProfileDisplay title="Bio">{profileBio}</ProfileDisplay>
         <ProfileDisplay title="Hobbies">{profileHobbies}</ProfileDisplay>
-        <Button mode="outlined" onPress={_refreshPage}>
-          Refresh
-        </Button>
         <Button mode="outlined" onPress={_handleChoosePhoto}>
           Choose Photo
         </Button>

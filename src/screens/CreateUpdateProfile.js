@@ -33,8 +33,12 @@ const CreateUpdateProfile = ({ navigation, route }) => {
   });
   const [address, setAddress] = useState({ value: profile.address, error: '' });
   const [bio, setBio] = useState({ value: profile.bio, error: '' });
-  const [hobbies, setHobbies] = useState({
+  /* const [hobbies, setHobbies] = useState({
     value: profile.hobbies.join(', '),
+    error: '',
+  }); */
+  const [hobbies, setHobbies] = useState({
+    value: '',
     error: '',
   });
 

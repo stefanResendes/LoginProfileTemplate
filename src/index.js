@@ -11,7 +11,9 @@ import {
   UpdateUserInformation,
   CreateUpdateProfile,
   ClockInOut,
-  TimeSummary
+  TimeSummary,
+  ContactsScreen,
+  CreateContactScreen
 } from './screens';
 
 import global from './global.js';
@@ -44,6 +46,8 @@ const AppStack = () => {
         />
         <Stack.Screen name="ClockInOut" component={ClockInOut} />
         <Stack.Screen name="TimeSummary" component={TimeSummary} />
+        <Stack.Screen name="ContactsScreen" component={ContactsScreen} />
+        <Stack.Screen name="CreateContactScreen" component={CreateContactScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
