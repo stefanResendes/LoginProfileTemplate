@@ -7,28 +7,17 @@ const ContactDisplay = ({ data }) => (
   <FlatList
     data={data}
     renderItem={({ item }) => (
-      <View>
-        <Divider />
+      <View style={{ borderColor: 'black', borderWidth: 1, marginBottom: 10 }}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 14,
                 marginBottom: 10,
+                fontWeight: 'bold'
               }}
             >
-              {item.firstName}
-            </Text>
-          </View>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 12,
-                marginBottom: 10,
-                textAlign: 'left',
-              }}
-            >
-              {item.lastName}
+              {item.firstName} {item.lastName}
             </Text>
           </View>
         </View>
@@ -36,7 +25,7 @@ const ContactDisplay = ({ data }) => (
           <View style={{ flex: 1 }}>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 14,
                 marginBottom: 10,
               }}
             >
@@ -48,15 +37,21 @@ const ContactDisplay = ({ data }) => (
           <View style={{ flex: 1 }}>
             <Text
               style={{
-                fontSize: 12,
+                fontSize: 14,
                 marginBottom: 10,
               }}
             >
-              {item.cellPhone}
+              ({item.cellPhone.charAt(0)}
+              {item.cellPhone.charAt(1)}
+              {item.cellPhone.charAt(2)}) {item.cellPhone.charAt(3)}
+              {item.cellPhone.charAt(4)}
+              {item.cellPhone.charAt(5)}-{item.cellPhone.charAt(6)}
+              {item.cellPhone.charAt(7)}
+              {item.cellPhone.charAt(8)}
+              {item.cellPhone.charAt(9)}
             </Text>
           </View>
         </View>
-        <Divider />
       </View>
     )}
   />
