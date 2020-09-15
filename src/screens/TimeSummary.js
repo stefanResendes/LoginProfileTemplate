@@ -22,7 +22,12 @@ const TimeSummary = ({ navigation, route }) => {
 
   return (
     <Background>
-      <ScrollView>
+      <ScrollView
+        style={{
+          width: '100%',
+          maxWidth: 500,
+        }}
+      >
         <Header>Time Summary</Header>
         <Button mode="outlined" onPress={_refreshList}>
           Refresh

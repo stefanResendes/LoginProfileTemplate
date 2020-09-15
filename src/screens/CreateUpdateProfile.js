@@ -33,14 +33,14 @@ const CreateUpdateProfile = ({ navigation, route }) => {
   });
   const [address, setAddress] = useState({ value: profile.address, error: '' });
   const [bio, setBio] = useState({ value: profile.bio, error: '' });
-  /* const [hobbies, setHobbies] = useState({
+  const [hobbies, setHobbies] = useState({
     value: profile.hobbies.join(', '),
     error: '',
-  }); */
-  const [hobbies, setHobbies] = useState({
+  });
+  /* const [hobbies, setHobbies] = useState({
     value: '',
     error: '',
-  });
+  }); */
 
   const _createProfile = () => {
     const homePhoneError = nameValidator(homephone.value); //Change to validate phone
@@ -105,7 +105,12 @@ const CreateUpdateProfile = ({ navigation, route }) => {
 
   return (
     <Background>
-      <ScrollView>
+      <ScrollView
+        style={{
+          width: '100%',
+          maxWidth: 500,
+        }}
+      >
         <Header>{action} Profile</Header>
         <TextInput
           label="Home Phone"

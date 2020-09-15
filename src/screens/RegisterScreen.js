@@ -56,7 +56,12 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <Background>
-      <ScrollView>
+      <ScrollView
+        style={{
+          width: '100%',
+          maxWidth: 500,
+        }}
+      >
         <Header>Create Account</Header>
 
         <TextInput

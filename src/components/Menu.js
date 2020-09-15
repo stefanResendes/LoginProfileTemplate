@@ -48,6 +48,9 @@ const AppMenu = () => {
 
     return (
       <Menu
+        style={{
+          margin: 10
+        }}
         visible={visible}
         onDismiss={closeMenu}
         anchor={

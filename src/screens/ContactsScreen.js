@@ -27,17 +27,26 @@ const ContactScreen = ({ navigation, route }) => {
         navigation.navigate('CreateContactScreen');
     };
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState(global.Profile.contacts);
+
+    console.log(data);
 
     return (
       <Background>
-        <ScrollView>
-          <ContactDisplay data={data}/>
+        <ScrollView
+          style={{
+            width: '100%',
+            maxWidth: 500,
+          }}
+        >
+          {
+            data ? <ContactDisplay data={data} /> : <View style={{ marginBottom: 10 }}><Text>There are no contacts associated with this profile.</Text></View>
+          }
           <Button mode="outlined" onPress={_navigateCreateContact}>
             New Contact
           </Button>
           <Button mode="outlined" onPress={_refreshList}>
-            Refresh
+            Refresh Contacts
           </Button>
         </ScrollView>
       </Background>

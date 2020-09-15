@@ -36,7 +36,12 @@ const CreateContactScreen = ({ navigation, route }) => {
 
   return (
     <Background>
-      <ScrollView>
+      <ScrollView
+        style={{
+          width: '100%',
+          maxWidth: 500,
+        }}
+      >
         <TextInput
           label="First Name"
           returnKeyType="next"

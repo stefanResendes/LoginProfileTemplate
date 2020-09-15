@@ -13,6 +13,14 @@ import { theme } from '../core/theme';
 
 const Dashboard = ({ navigation, route }) => {
 
+  useEffect(() => {
+    // Anything in here is fired on component mount.
+    console.log('mounted');
+    return () => {
+      console.log('unmounted');
+    }
+  }, []);
+
   const _formatPhone = number => {
       
     if (number == undefined) {
@@ -103,9 +111,18 @@ const Dashboard = ({ navigation, route }) => {
     setProfileHobbies(global.Profile.hobbies.join(', '));
   }
 
+  /* if (profileHobbies != global.Profile.hobbies.join(', ')) {
+    setProfileHobbies(global.Profile.hobbies.join(', '));
+  } */
+
   return (
     <Background>
-      <ScrollView>
+      <ScrollView
+        style={{
+          width: '100%',
+          maxWidth: 500,
+        }}
+      >
         <View
           style={{
             flexDirection: 'row',
@@ -119,9 +136,7 @@ const Dashboard = ({ navigation, route }) => {
               flexDirection: 'row',
               justifyContent: 'flex-start',
             }}
-          >
-            <AppMenu />
-          </View>
+          ></View>
           <View
             style={{
               flex: 1,
@@ -146,13 +161,21 @@ const Dashboard = ({ navigation, route }) => {
         <Header style={{ justifyContent: 'Center' }}>
           {global.User.firstName} {global.User.lastName}
         </Header>
-        <ProfileDisplay title="Home Phone">{profileHomePhone}</ProfileDisplay>
-        <ProfileDisplay title="Work Phone">{profileWorkPhone}</ProfileDisplay>
-        <ProfileDisplay title="Cell Phone">{profileCellPhone}</ProfileDisplay>
-        <ProfileDisplay title="Address">{profileAddress}</ProfileDisplay>
-        <ProfileDisplay title="Bio">{profileBio}</ProfileDisplay>
-        <ProfileDisplay title="Hobbies">{profileHobbies}</ProfileDisplay>
-        <Button mode="outlined" onPress={_handleChoosePhoto}>
+        <View
+          style={{
+            width: '100%',
+            maxWidth: 500,
+            justifyContent: 'center'
+          }}
+        >
+          <ProfileDisplay title="Home Phone">{profileHomePhone}</ProfileDisplay>
+          <ProfileDisplay title="Work Phone">{profileWorkPhone}</ProfileDisplay>
+          <ProfileDisplay title="Cell Phone">{profileCellPhone}</ProfileDisplay>
+          <ProfileDisplay title="Address">{profileAddress}</ProfileDisplay>
+          <ProfileDisplay title="Bio">{profileBio}</ProfileDisplay>
+          <ProfileDisplay title="Hobbies">{profileHobbies}</ProfileDisplay>
+        </View>
+        {/* <Button mode="outlined" onPress={_handleChoosePhoto}>
           Choose Photo
         </Button>
         <Button mode="outlined" onPress={_uploadPhoto}>
@@ -160,7 +183,7 @@ const Dashboard = ({ navigation, route }) => {
         </Button>
         <Button mode="outlined" onPress={_getPhoto}>
           Get Photo
-        </Button>
+        </Button> */}
       </ScrollView>
     </Background>
   );

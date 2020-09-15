@@ -7,13 +7,13 @@ const ContactDisplay = ({ data }) => (
   <FlatList
     data={data}
     renderItem={({ item }) => (
-      <View style={{ borderColor: 'black', borderWidth: 1, marginBottom: 10 }}>
+      <View style={{ borderColor: 'black', borderWidth: 0, marginBottom: 10 }}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
             <Text
               style={{
                 fontSize: 14,
-                marginBottom: 10,
+                marginBottom: 0,
                 fontWeight: 'bold'
               }}
             >
@@ -26,7 +26,7 @@ const ContactDisplay = ({ data }) => (
             <Text
               style={{
                 fontSize: 14,
-                marginBottom: 10,
+                marginBottom: 0,
               }}
             >
               {item.email}
@@ -38,7 +38,7 @@ const ContactDisplay = ({ data }) => (
             <Text
               style={{
                 fontSize: 14,
-                marginBottom: 10,
+                marginBottom: 0,
               }}
             >
               ({item.cellPhone.charAt(0)}

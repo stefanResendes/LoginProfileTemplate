@@ -10,7 +10,7 @@ const ProfileDisplay = ({ title, children, ...props }) => (
           fontSize: 16,
           marginBottom: 10,
           color: theme.colors.secondary,
-          fontWeight: 'bold',
+          fontWeight: 'bold'
         }}
       >
         {title}

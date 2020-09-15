@@ -105,7 +105,12 @@ const UpdateUserInformation = ({ navigation, route }) => {
 
   return (
     <Background>
-      <ScrollView>
+      <ScrollView
+        style={{
+          width: '100%',
+          maxWidth: 500,
+        }}
+      >
         <Header>Update User</Header>
         <TextInput
           label="First Name"
