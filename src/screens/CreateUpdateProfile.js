@@ -6,6 +6,7 @@ import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import TextArea from '../components/TextArea.js';
+import { StackActions, DrawerActions } from '@react-navigation/native';
 import {
   nameValidator,
   emailValidator,
@@ -15,7 +16,7 @@ import { Image, Text, ScrollView, View } from 'react-native';
 import global from '../global.js';
 
 const CreateUpdateProfile = ({ navigation, route }) => {
-  const { action } = route.params;
+  /* const { action } = route.params; */
 
   const profile = global.Profile;
 
@@ -65,6 +66,7 @@ const CreateUpdateProfile = ({ navigation, route }) => {
       setBio({ ...bio, error: bioError });
       return;
     } else {
+      console.log(global.Token);
       var data = {
         cellPhone: cellphone.value,
         homePhone: homephone.value,
@@ -73,6 +75,7 @@ const CreateUpdateProfile = ({ navigation, route }) => {
         bio: bio.value,
         hobbies: hobbiesArray,
       };
+      console.log(data);
       fetch('http://159.89.153.162:5000/api/v1/profile', {
         method: 'POST',
         headers: {
@@ -100,7 +103,8 @@ const CreateUpdateProfile = ({ navigation, route }) => {
 
     console.log(global.Profile);
 
-    navigation.navigate('Dashboard');
+    /* navigation.navigate('Dashboard'); */
+    navigation.dispatch(StackActions.replace('Dashboard'));
   };
 
   return (
@@ -111,7 +115,7 @@ const CreateUpdateProfile = ({ navigation, route }) => {
           maxWidth: 500,
         }}
       >
-        <Header>{action} Profile</Header>
+        <Header>Profile</Header>
         <TextInput
           label="Home Phone"
           returnKeyType="next"
@@ -167,7 +171,7 @@ const CreateUpdateProfile = ({ navigation, route }) => {
         />
 
         <Button mode="outlined" onPress={_createProfile}>
-          {action} Profile
+          Submit Profile
         </Button>
       </ScrollView>
     </Background>

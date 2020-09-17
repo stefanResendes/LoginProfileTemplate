@@ -60,7 +60,8 @@ const LoginScreen = ({ navigation }) => {
         })
         .then(res => res.json())
         .then(json => {
-          if (json.success !== undefined && json.success === false) {
+          console.log(json);
+          if (json.msg === "There is no profile for this user") {
             global.Profile = {
               homePhone: '',
               workPhone: '',
@@ -154,7 +155,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.label}>Don’t have an account? </Text>
         <TouchableOpacity
           onPress={() =>
-            navigation.dispatch(DrawerActions.jumpTo('RegisterScreen'))
+            navigation.dispatch(StackActions.replace('RegisterScreen'))
           }
         >
           <Text style={styles.link}>Sign up</Text>

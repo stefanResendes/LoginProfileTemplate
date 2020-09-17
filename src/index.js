@@ -131,9 +131,13 @@ const AppStack = () => {
           }}
         />
         <Stack.Screen
-          name="Dashboard"
-          component={drawerNav}
+          name="CreateUpdateProfile"
+          component={CreateUpdateProfile}
+          options={{
+            title: 'Profile',
+          }}
         />
+        <Stack.Screen name="Dashboard" component={drawerNav} />
       </Stack.Navigator>
     </NavigationContainer>
   );
