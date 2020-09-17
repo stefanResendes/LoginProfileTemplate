@@ -9,7 +9,7 @@ import BackButton from '../components/BackButton';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 import global from '../global.js';
-import { StackActions } from '@react-navigation/native';
+import { StackActions, DrawerActions } from '@react-navigation/native';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState({ value: '', error: '' });
@@ -154,7 +154,7 @@ const LoginScreen = ({ navigation }) => {
         <Text style={styles.label}>Don’t have an account? </Text>
         <TouchableOpacity
           onPress={() =>
-            navigation.dispatch(StackActions.replace('RegisterScreen'))
+            navigation.dispatch(DrawerActions.jumpTo('RegisterScreen'))
           }
         >
           <Text style={styles.link}>Sign up</Text>

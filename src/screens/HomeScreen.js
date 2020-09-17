@@ -4,7 +4,7 @@ import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import Paragraph from '../components/Paragraph';
-import { StackActions } from '@react-navigation/native';
+import { StackActions, DrawerActions } from '@react-navigation/native';
 
 const HomeScreen = ({ navigation }) => (
   <Background>

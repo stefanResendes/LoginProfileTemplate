@@ -1,6 +1,12 @@
 import React from 'react';
-import { NavigationContainer, StackActions } from '@react-navigation/native'
+import { NavigationContainer, StackActions, useNavigation } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack';
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from '@react-navigation/drawer';
 
 import AppMenu from './components/Menu.js';
 
@@ -21,10 +27,82 @@ import {
 import global from './global.js';
 
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 global.Profile = {homePhone: '', workPhone: '', cellPhone: '', address: '', bio: '', hobbies: []};
 global.User = '';
 global.Token = '';
+
+const logout = () => {
+  const navigation = useNavigation();
+  fetch('http://159.89.153.162:5000/api/v1/auth/logout', {
+    method: 'GET',
+  });
+  global.Token = '';
+  global.User = '';
+  global.Profile = {
+    homePhone: '',
+    workPhone: '',
+    cellPhone: '',
+    address: '',
+    bio: '',
+    hobbies: [],
+  };
+  StackActions.replace('Home');
+}
+
+function CustomDrawerContent(props) {
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      <DrawerItem label="Logout" onPress={() => logout} />
+    </DrawerContentScrollView>
+  );
+}
+
+const drawerNav = () => {
+  return (
+    <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen
+        name="Dashboard"
+        component={Dashboard}
+        options={{
+          title: 'Dashboard',
+        }}
+      />
+      <Drawer.Screen
+        name="UpdateUserInformation"
+        component={UpdateUserInformation}
+        options={{
+          title: 'User Information',
+        }}
+      />
+      <Drawer.Screen
+        name="CreateUpdateProfile"
+        component={CreateUpdateProfile}
+        options={{
+          title: 'Profile',
+        }}
+      />
+      <Drawer.Screen name="ClockInOut" component={ClockInOut} />
+      <Drawer.Screen name="TimeSummary" component={TimeSummary} />
+      <Drawer.Screen
+        name="ContactsScreen"
+        component={ContactsScreen}
+        options={{
+          title: 'Contacts',
+        }}
+      />
+      <Drawer.Screen
+        name="CreateContactScreen"
+        component={CreateContactScreen}
+        options={{
+          title: 'Create Contact',
+        }}
+      />
+    </Drawer.Navigator>
+  );
+}
 
 const AppStack = () => {
   return (
@@ -54,41 +132,7 @@ const AppStack = () => {
         />
         <Stack.Screen
           name="Dashboard"
-          component={Dashboard}
-          options={{
-            title: 'Dashboard',
-            headerRight: () => <AppMenu />,
-          }}
-        />
-        <Stack.Screen
-          name="UpdateUserInformation"
-          component={UpdateUserInformation}
-          options={{
-            title: 'User Information',
-          }}
-        />
-        <Stack.Screen
-          name="CreateUpdateProfile"
-          component={CreateUpdateProfile}
-          options={{
-            title: 'Profile',
-          }}
-        />
-        <Stack.Screen name="ClockInOut" component={ClockInOut} />
-        <Stack.Screen name="TimeSummary" component={TimeSummary} />
-        <Stack.Screen
-          name="ContactsScreen"
-          component={ContactsScreen}
-          options={{
-            title: 'Contacts',
-          }}
-        />
-        <Stack.Screen
-          name="CreateContactScreen"
-          component={CreateContactScreen}
-          options={{
-            title: 'Create Contact',
-          }}
+          component={drawerNav}
         />
       </Stack.Navigator>
     </NavigationContainer>

@@ -2,12 +2,46 @@ import React, { memo } from 'react';
 import { View, Text, FlatList } from 'react-native';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
 import { theme } from '../core/theme';
+import {
+  Collapse,
+  CollapseHeader,
+  CollapseBody,
+  AccordionList,
+} from 'accordion-collapse-react-native';
 
 const ContactDisplay = ({ data }) => (
   <FlatList
     data={data}
     renderItem={({ item }) => (
-      <View style={{ borderColor: 'black', borderWidth: 0, marginBottom: 10 }}>
+      <Collapse style={{ marginBottom: 10 }}>
+        <CollapseHeader>
+          <View>
+            <Text 
+              style={{
+                fontSize: 14,
+                marginBottom: 0,
+                fontWeight: 'bold'
+              }}
+            >
+              {item.firstName} {item.lastName}
+            </Text>
+          </View>
+        </CollapseHeader>
+        <CollapseBody>
+          <Text>{item.email}</Text>
+          <Text>
+            ({item.cellPhone.charAt(0)}
+            {item.cellPhone.charAt(1)}
+            {item.cellPhone.charAt(2)}) {item.cellPhone.charAt(3)}
+            {item.cellPhone.charAt(4)}
+            {item.cellPhone.charAt(5)}-{item.cellPhone.charAt(6)}
+            {item.cellPhone.charAt(7)}
+            {item.cellPhone.charAt(8)}
+            {item.cellPhone.charAt(9)}
+          </Text>
+        </CollapseBody>
+      </Collapse>
+      /* <View style={{ borderColor: 'black', borderWidth: 0, marginBottom: 10 }}>
         <View style={{ flex: 1, flexDirection: 'row' }}>
           <View style={{ flex: 1 }}>
             <Text
@@ -52,7 +86,7 @@ const ContactDisplay = ({ data }) => (
             </Text>
           </View>
         </View>
-      </View>
+      </View> */
     )}
   />
 );

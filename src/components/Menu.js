@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
-import { useNavigation, StackActions } from '@react-navigation/native';
+import { useNavigation, StackActions, DrawerActions } from '@react-navigation/native';
 
 const AppMenu = () => {
     const navigation = useNavigation();
@@ -54,7 +54,7 @@ const AppMenu = () => {
         visible={visible}
         onDismiss={closeMenu}
         anchor={
-          <TouchableOpacity onPress={openMenu}>
+          <TouchableOpacity onPress={navigation.openDrawer()}>
             <Image
               style={{ width: 24, height: 24 }}
               source={require('../assets/menu_icon.png')}

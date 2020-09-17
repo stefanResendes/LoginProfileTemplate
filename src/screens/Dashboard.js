@@ -8,14 +8,18 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import global from '../global.js';
 import ProfileDisplay from '../components/ProfileDisplay.js';
+import {
+  useNavigation,
+  StackActions,
+  DrawerActions,
+} from '@react-navigation/native';
 
 import { theme } from '../core/theme';
 
 const Dashboard = ({ navigation, route }) => {
-
   useEffect(() => {
     // Anything in here is fired on component mount.
-    console.log('mounted');
+    console.log('');
     return () => {
       console.log('unmounted');
     }
@@ -108,12 +112,14 @@ const Dashboard = ({ navigation, route }) => {
     setProfileCellPhone(_formatPhone(global.Profile.cellPhone));
     setProfileAddress(global.Profile.address);
     setProfileBio(global.Profile.bio);
-    setProfileHobbies(global.Profile.hobbies.join(', '));
+    if (global.Profile.hobbies !== undefined) {
+      setProfileHobbies(global.Profile.hobbies.join(', '));
+    }
   }
 
-  /* if (profileHobbies != global.Profile.hobbies.join(', ')) {
+  if ((global.Profile.hobbies !== undefined) && (profileHobbies !== global.Profile.hobbies.join(', '))) {
     setProfileHobbies(global.Profile.hobbies.join(', '));
-  } */
+  }
 
   return (
     <Background>
@@ -144,7 +150,9 @@ const Dashboard = ({ navigation, route }) => {
               justifyContent: 'flex-end',
             }}
           >
-            <TouchableOpacity onPress={_refreshPage}>
+            <TouchableOpacity
+              onPress={navigation.openDrawer()}
+            >
               <Image
                 style={{ width: 24, height: 24 }}
                 source={require('../assets/refresh_icon.png')}
@@ -165,7 +173,7 @@ const Dashboard = ({ navigation, route }) => {
           style={{
             width: '100%',
             maxWidth: 500,
-            justifyContent: 'center'
+            justifyContent: 'center',
           }}
         >
           <ProfileDisplay title="Home Phone">{profileHomePhone}</ProfileDisplay>
