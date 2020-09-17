@@ -8,6 +8,8 @@ import {
   CollapseBody,
   AccordionList,
 } from 'accordion-collapse-react-native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ContactDisplay = ({ data }) => (
   <FlatList
@@ -16,14 +18,19 @@ const ContactDisplay = ({ data }) => (
       <Collapse style={{ marginBottom: 10 }}>
         <CollapseHeader>
           <View>
-            <Text 
+            <Text
               style={{
                 fontSize: 14,
                 marginBottom: 0,
-                fontWeight: 'bold'
+                fontWeight: 'bold',
               }}
             >
-              {item.firstName} {item.lastName}
+              {/* <FontAwesomeIcon icon={faCheck} /> */}
+              <FontAwesomeIcon icon={faTimes} />
+              {' '}
+              {item.firstName}
+              {' '}
+              {item.lastName}
             </Text>
           </View>
         </CollapseHeader>
@@ -41,52 +48,6 @@ const ContactDisplay = ({ data }) => (
           </Text>
         </CollapseBody>
       </Collapse>
-      /* <View style={{ borderColor: 'black', borderWidth: 0, marginBottom: 10 }}>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 14,
-                marginBottom: 0,
-                fontWeight: 'bold'
-              }}
-            >
-              {item.firstName} {item.lastName}
-            </Text>
-          </View>
-        </View>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 14,
-                marginBottom: 0,
-              }}
-            >
-              {item.email}
-            </Text>
-          </View>
-        </View>
-        <View style={{ flex: 1, flexDirection: 'row' }}>
-          <View style={{ flex: 1 }}>
-            <Text
-              style={{
-                fontSize: 14,
-                marginBottom: 0,
-              }}
-            >
-              ({item.cellPhone.charAt(0)}
-              {item.cellPhone.charAt(1)}
-              {item.cellPhone.charAt(2)}) {item.cellPhone.charAt(3)}
-              {item.cellPhone.charAt(4)}
-              {item.cellPhone.charAt(5)}-{item.cellPhone.charAt(6)}
-              {item.cellPhone.charAt(7)}
-              {item.cellPhone.charAt(8)}
-              {item.cellPhone.charAt(9)}
-            </Text>
-          </View>
-        </View>
-      </View> */
     )}
   />
 );
