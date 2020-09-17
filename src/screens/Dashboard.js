@@ -5,6 +5,8 @@ import * as ImagePicker from 'expo-image-picker';
 import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import global from '../global.js';
 import ProfileDisplay from '../components/ProfileDisplay.js';
+import Button from '../components/Button';
+import { StackActions } from '@react-navigation/native';
 
 const Dashboard = ({ navigation, route }) => {
   useEffect(() => {
@@ -107,6 +109,16 @@ const Dashboard = ({ navigation, route }) => {
     }
   }
 
+  const _logout = () => {
+    fetch('http://159.89.153.162:5000/api/v1/auth/logout', {
+      method: 'GET',
+    });
+    global.Token = '';
+    global.User = '';
+    global.Profile = '';
+    navigation.dispatch(StackActions.replace('Home'));
+  };
+
   if ((global.Profile.hobbies !== undefined) && (profileHobbies !== global.Profile.hobbies.join(', '))) {
     setProfileHobbies(global.Profile.hobbies.join(', '));
   }
@@ -140,9 +152,7 @@ const Dashboard = ({ navigation, route }) => {
               justifyContent: 'flex-end',
             }}
           >
-            <TouchableOpacity
-              onPress={navigation.openDrawer()}
-            >
+            <TouchableOpacity onPress={navigation.openDrawer()}>
               <Image
                 style={{ width: 24, height: 24 }}
                 source={require('../assets/refresh_icon.png')}
@@ -173,6 +183,9 @@ const Dashboard = ({ navigation, route }) => {
           <ProfileDisplay title="Bio">{profileBio}</ProfileDisplay>
           <ProfileDisplay title="Hobbies">{profileHobbies}</ProfileDisplay>
         </View>
+        <Button mode="outlined" onPress={_logout}>
+          Logout
+        </Button>
         {/* <Button mode="outlined" onPress={_handleChoosePhoto}>
           Choose Photo
         </Button>

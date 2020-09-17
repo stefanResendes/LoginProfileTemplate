@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { TouchableOpacity, Image } from 'react-native';
 import { Button, Menu, Divider, Provider } from 'react-native-paper';
-import { useNavigation, StackActions, DrawerActions } from '@react-navigation/native';
+import { useNavigation, StackActions } from '@react-navigation/native';
 
 const AppMenu = () => {
     const navigation = useNavigation();
