@@ -1,6 +1,5 @@
 import React, { memo, useState } from 'react';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
 import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
@@ -9,7 +8,7 @@ import {
   emailValidator,
   passwordValidator,
 } from '../core/utils';
-import { Image, Text, ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import global from '../global.js';
 
 const UpdateUserInformation = ({ navigation, route }) => {

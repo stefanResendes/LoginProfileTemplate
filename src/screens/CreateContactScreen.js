@@ -1,14 +1,9 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import Background from '../components/Background';
-import Header from '../components/Header';
-import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
-import * as ImagePicker from 'expo-image-picker';
-import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
+import { ScrollView } from 'react-native';
 import global from '../global.js';
-
-import { theme } from '../core/theme';
 
 const CreateContactScreen = ({ navigation, route }) => {
   const [fName, setfName] = useState({value: '', error: ''});

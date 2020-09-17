@@ -1,20 +1,10 @@
 import React, { memo, useState, useEffect } from 'react';
 import Background from '../components/Background';
 import Header from '../components/Header';
-import Paragraph from '../components/Paragraph';
-import Button from '../components/Button';
-import AppMenu from '../components/Menu.js';
 import * as ImagePicker from 'expo-image-picker';
 import { Image, ScrollView, View, TouchableOpacity } from 'react-native';
 import global from '../global.js';
 import ProfileDisplay from '../components/ProfileDisplay.js';
-import {
-  useNavigation,
-  StackActions,
-  DrawerActions,
-} from '@react-navigation/native';
-
-import { theme } from '../core/theme';
 
 const Dashboard = ({ navigation, route }) => {
   useEffect(() => {

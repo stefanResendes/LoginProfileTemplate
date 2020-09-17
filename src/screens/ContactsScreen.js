@@ -1,11 +1,11 @@
-import React, { memo, useState, useEffect } from 'react';
+import React, { memo, useState } from 'react';
 import Background from '../components/Background';
 import Button from '../components/Button';
-import { Text, ScrollView, View, FlatList, TouchableOpacity } from 'react-native';
+import { Text, ScrollView, View } from 'react-native';
 import global from '../global.js';
 import ContactDisplay from '../components/ContactDisplay.js';
 
-const ContactScreen = ({ navigation, route }) => {
+const ContactScreen = ({ navigation }) => {
 
     const _refreshList = () => {
         fetch('http://159.89.153.162:5000/api/v1/profile/me', {

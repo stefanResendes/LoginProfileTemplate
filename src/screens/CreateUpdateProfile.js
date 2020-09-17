@@ -1,18 +1,16 @@
 import React, { memo, useState } from 'react';
 import Background from '../components/Background';
-import Logo from '../components/Logo';
 import Header from '../components/Header';
-import Paragraph from '../components/Paragraph';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import TextArea from '../components/TextArea.js';
-import { StackActions, DrawerActions } from '@react-navigation/native';
+import { StackActions } from '@react-navigation/native';
 import {
   nameValidator,
   emailValidator,
   passwordValidator,
 } from '../core/utils';
-import { Image, Text, ScrollView, View } from 'react-native';
+import { ScrollView } from 'react-native';
 import global from '../global.js';
 
 const CreateUpdateProfile = ({ navigation, route }) => {
