@@ -60,6 +60,17 @@ function CustomDrawerContent(props) {
   );
 }
 
+const MenuButton = () => {
+  return (
+    <TouchableOpacity onPress={ () => {this.props.navigate('DrawerOpen')} }>
+      <Image
+        style={{ width: 24, height: 24 }}
+        source={require('./assets/menu_icon.png')}
+      />
+    </TouchableOpacity>
+  );
+}
+
 const drawerNav = () => {
   return (
     <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
@@ -137,7 +148,12 @@ const AppStack = () => {
             title: 'Profile',
           }}
         />
-        <Stack.Screen name="Dashboard" component={drawerNav} />
+        <Stack.Screen name="Dashboard" 
+          component={drawerNav}
+          options={{
+            headerRight: () => <AppMenu /> 
+          }} 
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
