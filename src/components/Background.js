@@ -25,10 +25,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 20,
-    width: '90%',
+    width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
 });
 

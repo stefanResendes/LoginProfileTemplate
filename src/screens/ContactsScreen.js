@@ -18,7 +18,7 @@ const ContactScreen = ({ navigation }) => {
         })
           .then(response => response.json())
           .then(json => {
-            console.log("HERE");
+            /* console.log("HERE");
             console.log(json.contacts.length);
 
             for (var i = 0; i < json.contacts.length; i++) {
@@ -26,7 +26,7 @@ const ContactScreen = ({ navigation }) => {
               console.log(json.contacts[i]);
               json.contacts[i].open = false;
             }
-            console.log(json.contacts);
+            console.log(json.contacts); */
             setData(json.contacts);
           });
     };
