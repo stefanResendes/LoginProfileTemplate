@@ -9,3 +9,4 @@ export { default as ClockInOut } from './ClockInOut';
 export { default as TimeSummary } from './TimeSummary';
 export { default as ContactsScreen } from './ContactsScreen';
 export { default as CreateContactScreen } from './CreateContactScreen';
+export { default as ChatScreen } from './ChatScreen';

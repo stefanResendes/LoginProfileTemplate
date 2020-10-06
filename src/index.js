@@ -21,7 +21,8 @@ import {
   ClockInOut,
   TimeSummary,
   ContactsScreen,
-  CreateContactScreen
+  CreateContactScreen,
+  ChatScreen
 } from './screens';
 
 import global from './global.js';
@@ -73,7 +74,9 @@ const MenuButton = () => {
 
 const drawerNav = () => {
   return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawerContent {...props} />}>
+    <Drawer.Navigator
+      drawerContent={props => <CustomDrawerContent {...props} />}
+    >
       <Drawer.Screen
         name="Dashboard"
         component={Dashboard}
@@ -109,6 +112,13 @@ const drawerNav = () => {
         component={CreateContactScreen}
         options={{
           title: 'Create Contact',
+        }}
+      />
+      <Drawer.Screen
+        name="ChatScreen"
+        component={ChatScreen}
+        options={{
+          title: 'Chat',
         }}
       />
     </Drawer.Navigator>
