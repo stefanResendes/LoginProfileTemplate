@@ -8,8 +8,8 @@ import io from 'socket.io-client';
 
 const ChatScreen = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
-    //const socket = io('http://174.138.41.52:9090');
-    const socket = io('http://192.168.1.3:9090');
+    const socket = io('http://174.138.41.52:9090');
+    /* const socket = io('http://192.168.1.3:9090'); */
 
     useEffect(() => {
       socket.connect();
