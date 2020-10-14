@@ -18,15 +18,6 @@ const ContactScreen = ({ navigation }) => {
         })
           .then(response => response.json())
           .then(json => {
-            /* console.log("HERE");
-            console.log(json.contacts.length);
-
-            for (var i = 0; i < json.contacts.length; i++) {
-              console.log(json.contacts);
-              console.log(json.contacts[i]);
-              json.contacts[i].open = false;
-            }
-            console.log(json.contacts); */
             setData(json.contacts);
           });
     };
@@ -35,9 +26,11 @@ const ContactScreen = ({ navigation }) => {
         navigation.navigate('CreateContactScreen');
     };
 
-    const [data, setData] = useState(global.Profile.contacts);
+    const _goToChat = async () => {
+      navigation.navigate('ChatScreen', {target: 'group'});
+    };
 
-    console.log(data);
+    const [data, setData] = useState(global.Profile.contacts);
 
     return (
       <Background>
@@ -47,14 +40,21 @@ const ContactScreen = ({ navigation }) => {
             maxWidth: 500,
           }}
         >
-          {
-            data ? <ContactDisplay data={data} /> : <View style={{ marginBottom: 10 }}><Text>There are no contacts associated with this profile.</Text></View>
-          }
+          {data ? (
+            <ContactDisplay data={data} />
+          ) : (
+            <View style={{ marginBottom: 10 }}>
+              <Text>There are no contacts associated with this profile.</Text>
+            </View>
+          )}
           <Button mode="outlined" onPress={_navigateCreateContact}>
             New Contact
           </Button>
           <Button mode="outlined" onPress={_refreshList}>
             Refresh Contacts
+          </Button>
+          <Button mode="outlined" onPress={_goToChat}>
+            Go To Chat
           </Button>
         </ScrollView>
       </Background>
