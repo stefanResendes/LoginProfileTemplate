@@ -11,8 +11,8 @@ const ChatScreen = ({ navigation, route }) => {
     const { target } = route.params;
 
     const [messages, setMessages] = useState([]);
-    /* const socket = io('http://174.138.41.52:9090'); */
-    const socket = io('http://192.168.1.3:9090');
+    const socket = io('http://174.138.41.52:9090');
+    //const socket = io('http://192.168.1.3:9090');
 
     useEffect(() => {
       socket.connect();
