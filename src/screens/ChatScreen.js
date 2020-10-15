@@ -26,6 +26,7 @@ const ChatScreen = ({ navigation, route }) => {
     }, []);
 
     const onSend = useCallback((messages = []) => {
+      console.log(messages);
       socket.emit('chat_message', messages);
     }, []);
 
@@ -60,6 +61,8 @@ const ChatScreen = ({ navigation, route }) => {
             onSend={messages => onSend(messages)}
             user={{
               _id: global.User.email,
+              name: global.User.firstName,
+              avatar: 'https://placeimg.com/140/140/any',
             }}
             inverted={inverted}
           />
