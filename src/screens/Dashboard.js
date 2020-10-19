@@ -7,6 +7,7 @@ import global from '../global.js';
 import ProfileDisplay from '../components/ProfileDisplay.js';
 import Button from '../components/Button';
 import { StackActions } from '@react-navigation/native';
+import QRCode from 'react-native-qrcode-svg';
 
 const Dashboard = ({ navigation, route }) => {
   useEffect(() => {
@@ -176,6 +177,7 @@ const Dashboard = ({ navigation, route }) => {
             justifyContent: 'center',
           }}
         >
+          <QRCode value="http://google.com" />
           <ProfileDisplay title="Home Phone">{profileHomePhone}</ProfileDisplay>
           <ProfileDisplay title="Work Phone">{profileWorkPhone}</ProfileDisplay>
           <ProfileDisplay title="Cell Phone">{profileCellPhone}</ProfileDisplay>
