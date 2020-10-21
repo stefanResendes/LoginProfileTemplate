@@ -4,9 +4,13 @@ import Header from '../components/Header';
 import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import {
-  nameValidator,
+  firstNameValidator,
+  lastNameValidator,
+  middleNameValidator,
   emailValidator,
   passwordValidator,
+  phoneValidator,
+  addressValidator
 } from '../core/utils';
 import { ScrollView } from 'react-native';
 import global from '../global.js';
@@ -47,15 +51,15 @@ const UpdateUserInformation = ({ navigation, route }) => {
   });
 
   const _updateUser = () => {
-    const firstNameError = nameValidator(firstname.value);
-    const lastNameError = nameValidator(lastname.value);
-    const middleNameError = nameValidator(middlename.value);
+    const firstNameError = firstNameValidator(firstname.value);
+    const lastNameError = lastNameValidator(lastname.value);
+    const middleNameError = middleNameValidator(middlename.value);
     const emailError = emailValidator(email.value);
     const updateuserpassError = passwordValidator(updateuserpass.value);
-    const homePhoneError = nameValidator(homephone.value);
-    const workPhoneError = nameValidator(workphone.value);
-    const cellPhoneError = nameValidator(cellphone.value);
-    const addressError = nameValidator(address.value);
+    const homePhoneError = phoneValidator(homephone.value, 'Home');
+    const workPhoneError = phoneValidator(workphone.value, 'Work');
+    const cellPhoneError = phoneValidator(cellphone.value, 'Cell');
+    const addressError = addressValidator(address.value);
 
     if (
       firstNameError ||

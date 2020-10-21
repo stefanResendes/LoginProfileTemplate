@@ -9,6 +9,10 @@ import {
   nameValidator,
   emailValidator,
   passwordValidator,
+  phoneValidator,
+  addressValidator,
+  bioValidator,
+  hobbiesValidator
 } from '../core/utils';
 import { ScrollView } from 'react-native';
 import global from '../global.js';
@@ -36,35 +40,33 @@ const CreateUpdateProfile = ({ navigation, route }) => {
     value: profile.hobbies.join(', '),
     error: '',
   });
-  /* const [hobbies, setHobbies] = useState({
-    value: '',
-    error: '',
-  }); */
 
   const _createProfile = () => {
-    const homePhoneError = nameValidator(homephone.value); //Change to validate phone
-    const workPhoneError = nameValidator(workphone.value); //Change to validate phone
-    const cellPhoneError = nameValidator(cellphone.value); //Change to validate phone
-    const addressError = nameValidator(address.value); //Change to validate address
-    const bioError = nameValidator(bio.value); //Change to validate bio
-
-    var hobbiesArray = hobbies.value.split(', ');
+    const homePhoneError = phoneValidator(homephone.value, 'Home');
+    const workPhoneError = phoneValidator(workphone.value, 'Work');
+    const cellPhoneError = phoneValidator(cellphone.value, 'Cell');
+    const addressError = addressValidator(address.value);
+    const bioError = bioValidator(bio.value);
+    const hobbiesError = hobbiesValidator(hobbies.value);
 
     if (
       homePhoneError ||
       workPhoneError ||
       cellPhoneError ||
       addressError ||
-      bioError
+      bioError ||
+      hobbiesError
     ) {
       setHomePhone({ ...homephone, error: homePhoneError });
       setWorkPhone({ ...workphone, error: workPhoneError });
       setCellPhone({ ...cellphone, error: cellPhoneError });
       setAddress({ ...address, error: addressError });
       setBio({ ...bio, error: bioError });
+      setHobbies({ ...hobbies, error: hobbiesError });
       return;
     } else {
-      console.log(global.Token);
+      var hobbiesArray = hobbies.value.split(', ');
+
       var data = {
         cellPhone: cellphone.value,
         homePhone: homephone.value,
@@ -73,7 +75,7 @@ const CreateUpdateProfile = ({ navigation, route }) => {
         bio: bio.value,
         hobbies: hobbiesArray,
       };
-      console.log(data);
+      
       fetch('http://159.89.153.162:5000/api/v1/profile', {
         method: 'POST',
         headers: {
@@ -90,7 +92,6 @@ const CreateUpdateProfile = ({ navigation, route }) => {
 
   const _updateGlobalProfile = () => {
     var hobbiesArray = hobbies.value.split(', ');
-    console.log(hobbiesArray);
 
     global.Profile.cellPhone = cellphone.value;
     global.Profile.homePhone = homephone.value;
@@ -98,8 +99,6 @@ const CreateUpdateProfile = ({ navigation, route }) => {
     global.Profile.address = address.value;
     global.Profile.bio = bio.value;
     global.Profile.hobbies = hobbiesArray;
-
-    console.log(global.Profile);
 
     /* navigation.navigate('Dashboard'); */
     navigation.dispatch(StackActions.replace('Dashboard'));

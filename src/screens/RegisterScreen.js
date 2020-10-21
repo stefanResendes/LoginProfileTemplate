@@ -10,7 +10,8 @@ import { ScrollView } from 'react-native';
 import {
   emailValidator,
   passwordValidator,
-  nameValidator,
+  firstNameValidator,
+  lastNameValidator
 } from '../core/utils';
 
 const RegisterScreen = ({ navigation }) => {
@@ -20,8 +21,8 @@ const RegisterScreen = ({ navigation }) => {
   const [password, setPassword] = useState({ value: '', error: '' });
 
   const _onSignUpPressed = () => {
-    const nameError = nameValidator(name.value);
-    const lastNameError = nameValidator(lastname.value);
+    const nameError = firstNameValidator(name.value);
+    const lastNameError = lastNameValidator(lastname.value);
     const emailError = emailValidator(email.value);
     const passwordError = passwordValidator(password.value);
 

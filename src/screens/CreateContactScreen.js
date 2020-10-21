@@ -4,6 +4,13 @@ import Button from '../components/Button';
 import TextInput from '../components/TextInput';
 import { ScrollView } from 'react-native';
 import global from '../global.js';
+import {
+  emailValidator,
+  passwordValidator,
+  firstNameValidator,
+  lastNameValidator,
+  phoneValidator
+} from '../core/utils';
 
 const CreateContactScreen = ({ navigation, route }) => {
   const [fName, setfName] = useState({value: '', error: ''});
@@ -12,21 +19,34 @@ const CreateContactScreen = ({ navigation, route }) => {
   const [contactPhone, setContactPhone] = useState({value: '', error: ''});
 
   const _createContact = async () => {
-    var data = {
-      firstName: fName.value,
-      lastName: lName.value,
-      email: contactEmail.value,
-      cellPhone: contactPhone.value
-    };
-    fetch('http://159.89.153.162:5000/api/v1/profile/contacts', {
-      method: 'PUT',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + global.Token,
-      },
-      body: JSON.stringify(data),
-    });
+    const fNameError = firstNameValidator(fName.value);
+    const lNameError = lastNameValidator(lName.value);
+    const contactEmailError = emailValidator(contactEmail.value);
+    const contactPhoneError = phoneValidator(contactPhone.value, 'Contact')
+
+    if (fNameError || lNameError || contactEmailError || contactPhoneError) {
+      setfName({ ...fName, error: fNameError });
+      setlName({ ...lName, error: lNameError });
+      setContactEmail({ ...contactEmail, error: contactEmailError });
+      setContactPhone({ ...contactPhone, error: contactPhoneError });
+      return;
+    } else {
+      var data = {
+        firstName: fName.value,
+        lastName: lName.value,
+        email: contactEmail.value,
+        cellPhone: contactPhone.value
+      };
+      fetch('http://159.89.153.162:5000/api/v1/profile/contacts', {
+        method: 'PUT',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + global.Token,
+        },
+        body: JSON.stringify(data),
+      });
+    }
   };
 
   return (

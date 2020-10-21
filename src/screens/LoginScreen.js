@@ -73,11 +73,6 @@ const LoginScreen = ({ navigation }) => {
           }
         })
         .then(() => {
-          console.log(global.Token);
-          console.log(global.User);
-          console.log(global.Profile);
-          console.log(global.Profile.homePhone);
-
           if (global.Profile.homePhone === '') {
             navigation.navigate('CreateUpdateProfile', { action: 'Create' });
           } else {
