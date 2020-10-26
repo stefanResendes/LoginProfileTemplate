@@ -80,7 +80,7 @@ const Dashboard = ({ navigation, route }) => {
 
   const _uploadPhoto = () => {
 
-    var token = global.Token;
+    /* var token = global.Token; */
 
     var image = {
       uri: photo.uri,
@@ -90,12 +90,19 @@ const Dashboard = ({ navigation, route }) => {
 
     var data = new FormData();
     data.append('file', image);
-    fetch('http://159.89.153.162:5000/api/v1/profile/'+ global.Profile._id +'/photo', {
-      method: 'PUT',
+
+    var data = {
+      image: photo.uri
+    }
+
+    fetch('http://192.168.86.22:3000/picture/add', {
+      method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + token
+        /* 'Authorization': 'Bearer ' + token */
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: data
+      body: JSON.stringify(data)
     });
   }
 
@@ -188,13 +195,13 @@ const Dashboard = ({ navigation, route }) => {
         <Button mode="outlined" onPress={_logout}>
           Logout
         </Button>
-        {/* <Button mode="outlined" onPress={_handleChoosePhoto}>
+        <Button mode="outlined" onPress={_handleChoosePhoto}>
           Choose Photo
         </Button>
         <Button mode="outlined" onPress={_uploadPhoto}>
           Send Photo
         </Button>
-        <Button mode="outlined" onPress={_getPhoto}>
+        {/* <Button mode="outlined" onPress={_getPhoto}>
           Get Photo
         </Button> */}
       </ScrollView>

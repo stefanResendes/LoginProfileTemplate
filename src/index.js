@@ -22,7 +22,8 @@ import {
   TimeSummary,
   ContactsScreen,
   CreateContactScreen,
-  ChatScreen
+  ChatScreen,
+  CameraScreen
 } from './screens';
 
 import global from './global.js';
@@ -119,6 +120,13 @@ const drawerNav = () => {
         component={ChatScreen}
         options={{
           title: 'Chat',
+        }}
+      />
+      <Drawer.Screen
+        name="CameraScreen"
+        component={CameraScreen}
+        options={{
+          title: 'Camera',
         }}
       />
     </Drawer.Navigator>

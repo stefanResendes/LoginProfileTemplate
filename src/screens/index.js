@@ -10,3 +10,4 @@ export { default as TimeSummary } from './TimeSummary';
 export { default as ContactsScreen } from './ContactsScreen';
 export { default as CreateContactScreen } from './CreateContactScreen';
 export { default as ChatScreen } from './ChatScreen';
+export { default as CameraScreen } from './CameraScreen';
