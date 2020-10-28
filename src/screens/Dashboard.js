@@ -86,24 +86,27 @@ const Dashboard = ({ navigation, route }) => {
       uri: photo.uri,
       type: 'image/jpeg',
       name: 'photo.jpg'
-    }
+    };
 
     var data = new FormData();
     data.append('file', image);
 
-    var data = {
-      image: photo.uri
-    }
-
-    fetch('http://192.168.86.22:3000/picture/add', {
+    fetch('http://174.138.41.52:3000/picture/add', {
       method: 'POST',
-      headers: {
-        /* 'Authorization': 'Bearer ' + token */
+      /* headers: {
+        'Authorization': 'Bearer ' + token
         'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data)
-    });
+        'Content-Type': 'multipart/form-data',
+      }, */
+      body: data
+    })
+      .then(response => response.json())
+      .then(response => {
+        console.log('upload succes', response);
+      })
+      .catch(error => {
+        console.log('upload error', error);
+      });;
   }
 
   const _refreshPage = () => {
